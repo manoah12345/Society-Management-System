@@ -8,13 +8,13 @@ function Navbar() {
         <h1 className='font-bold text-2xl'>Society Management System</h1>
         <div className='h-full w-1/3 flex justify-around items-center'>
         <Link to='/'>
-            <h3 className='p-1 rounded hover:bg-sky-400'>Home</h3>
+            <h3 className='h-[50px] w-[100px] flex items-center justify-center p-1 rounded hover:bg-green-400'>Home</h3>
             </Link>
             <Link to='/profile/detail'>
             <CgProfile className='text-2xl' />
             </Link>
-            <h3 className='p-1 rounded hover:bg-sky-400'>About</h3>
-            <h3 className='p-1 rounded hover:bg-sky-400'>Username</h3>
+            <h3 className='h-[50px] w-[100px] flex items-center justify-center p-1 rounded hover:bg-green-400'>About</h3>
+            <h3 className='h-[50px] w-[100px] flex items-center justify-center p-1 rounded hover:bg-green-400'>Username</h3>
         </div>
     </div>
   )
