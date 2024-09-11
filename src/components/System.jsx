@@ -11,7 +11,7 @@ function System() {
   return (
     <div className='h-full w-full bg-white overflow-hidden'>
         <Navbar/>
-        <div className='h-[87%] w-full bg-blue-400 flex'>
+        <div className='w-full bg-blue-400 flex' style={{height: 'calc(100vh - 70px)'}}>
             <Sidebar/>
             <Routes>
                 <Route path='/' element={<Home/>}></Route>

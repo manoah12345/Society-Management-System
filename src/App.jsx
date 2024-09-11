@@ -1,11 +1,14 @@
 import React from 'react'
 import System from './components/System'
+import { Auth } from './components/auth'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
-    <div className='h-screen w-full'>
-      <System/>
-    </div>
+        <Routes>
+          <Route path="/auth" element={<Auth />} />
+          <Route path="*" element={<System />} />
+        </Routes>
   ) 
 }
 
