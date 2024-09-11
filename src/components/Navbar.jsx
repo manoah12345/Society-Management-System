@@ -28,8 +28,8 @@ function Navbar() {
             <Link to='/profile/detail'>
             <CgProfile className='text-2xl' />
             </Link>
-            <h3 className='h-[50px] w-[100px] flex items-center justify-center p-1 rounded hover:bg-green-400'>About</h3>
-            <h3 className='h-[50px] w-[100px] flex items-center justify-center p-1 rounded hover:bg-green-400' onClick={logOut}>Log Out</h3>
+            <h3 className='h-[50px] w-[100px] flex items-center justify-center p-1 rounded hover:bg-green-400 hover:cursor-pointer'>About</h3>
+            <h3 className='h-[50px] w-[100px] flex items-center justify-center p-1 rounded hover:bg-green-400 hover:cursor-pointer' onClick={logOut}>Log Out</h3>
         </div>
     </div>
   )

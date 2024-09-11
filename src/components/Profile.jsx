@@ -8,21 +8,21 @@ function Profile() {
 
   return (
     <div className='h-full w-[82%]'>
-        <div className='w-[100vw] h-[300px] bg-white flex flex-col justify-center gap-3'>
+        <div className='w-[86vw] h-[300px] bg-white flex flex-col items-center justify-center gap-3'>
             <Link to='/profile/detail'>
-        <CgProfile className='text-[120px] ml-[40vw]' />
+        <CgProfile className='text-[120px]' />
         </Link>
-        <h1 className='text-3xl ml-[38vw]'>{ email }</h1>
+        <h1 className='text-3xl'>{ email }</h1>
         </div>
-        <div className='w-full h-[40%] bg-blue-400 flex justify-center items-center'>
-            <table className='border-2 border-black h-20 w-[32%] bg-white'>
+        <div className='w-[86vw] h-[40%] bg-blue-400 flex justify-center items-center text-[30px]'>
+            <table className='border-2 border-black h-[50%] w-[32%] bg-white'>
                 <tr className='border-2 border-black'>
                     <td className='border-2 border-black text-center'>Flat No.</td>
                     <td className='text-center'>201</td>
                 </tr>
                 <tr>
-                    <td className='border-2 border-black text-center'>role</td>
-                    <td className='text-center'>member</td>
+                    <td className='border-2 border-black text-center'>Role</td>
+                    <td className='text-center'>Member</td>
                 </tr>
             </table>
         </div>
