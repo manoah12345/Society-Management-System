@@ -3,7 +3,7 @@ import System from './components/System'
 
 function App() {
   return (
-    <div className='h-screen w-full  bg-slate-400 py-8 px-20'>
+    <div className='h-screen w-full'>
       <System/>
     </div>
   ) 

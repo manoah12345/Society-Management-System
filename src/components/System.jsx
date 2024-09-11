@@ -9,7 +9,7 @@ import { Route, Routes } from 'react-router-dom'
 
 function System() {
   return (
-    <div className='h-full w-full rounded-xl bg-white overflow-hidden'>
+    <div className='h-full w-full bg-white overflow-hidden'>
         <Navbar/>
         <div className='h-[87%] w-full bg-blue-400 flex'>
             <Sidebar/>
