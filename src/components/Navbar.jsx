@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 
 function Navbar() {
   return (
-    <div className='h-[13%] w-full bg-green-300 flex justify-between items-center px-5'>
-        <h1>Society Management System</h1>
+    <div className='h-[70px] w-full bg-green-300 flex justify-between items-center px-2 text-xl'>
+        <h1 className='font-bold text-2xl'>Society Management System</h1>
         <div className='h-full w-1/3 flex justify-around items-center'>
         <Link to='/'>
             <h3 className='p-1 rounded hover:bg-sky-400'>Home</h3>
