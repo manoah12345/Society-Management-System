@@ -18,7 +18,8 @@ export const Auth = () => {
         }
     }
 
-    const logIn = async () => {
+    const logIn = async (e) => {
+      e.preventDefault();
         try{
             await signInWithEmailAndPassword(auth, email, password);
             navigate('/');
@@ -56,14 +57,15 @@ export const Auth = () => {
             />
           </div>
 
-          <Link to='/'>
           <button
             type="submit"
             className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-200"
+            onClick={logIn}
           >
             Login
           </button>
-          </Link>
+          <a href="/signup" className='text-blue-600 underline mt-4 block'> Create an account</a>
+
         </form>
       </div>
     </div>

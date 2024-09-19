@@ -10,7 +10,8 @@ export const Signup = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const navigate = useNavigate();
 
-    const signUp = async () => {
+    const signUp = async (e) => {
+      e.preventDefault();
         if(password != confirmPassword) {
             alert('Passwords do not match.');
             navigate("/signup")
@@ -26,8 +27,8 @@ export const Signup = () => {
     return(
         <div className="h-[100vh] w-full flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
-        <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
-        <form >
+        <h2 className="text-2xl font-bold text-center mb-6">Sign Up</h2>
+        <form onSubmit={signUp}>
           <div className="mb-4">
             <label htmlFor="email" className="block text-gray-700 mb-2">Email</label>
             <input
@@ -67,10 +68,10 @@ export const Signup = () => {
           
           <button
             className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-200"
-            onClick={signUp}
           >
-            Login
+            Sign Up
           </button>
+          <a href="/auth" className='text-blue-600 underline mt-4 block'>Already have an account</a>
         </form>
       </div>
     </div>
