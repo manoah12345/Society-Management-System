@@ -17,7 +17,7 @@ function SocietyInfo() {
         <h3 className='text-center border border-black'>State</h3>
         <h3 className='px-1 border border-black'>Maharashta</h3>
     </div>
-    <button className='w-full h-10 border rounded bg-white text-black border-black mt-3'>Edit Info</button>
+    
     </div>
   )
 }

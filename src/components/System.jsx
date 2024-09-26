@@ -5,6 +5,7 @@ import Home from "./Home";
 import Profile from "./Profile";
 import Detail from "./Detail";
 import SocietyInfo from "./SocietyInfo";
+import Members from "./Members";
 import { Route, Routes } from "react-router-dom";
 
 function System() {
@@ -18,9 +19,10 @@ function System() {
         <Sidebar />
         <Routes>
           <Route path="/" element={<Home />}></Route>
-          <Route path="/profile" element={<Profile />}></Route>
+          <Route path="/profile" element={<Profile/>}></Route>
           <Route path="/profile/detail" element={<Detail />}></Route>
           <Route path="/society" element={<SocietyInfo />}></Route>
+          <Route path="/members" element={<Members/>}></Route>
         </Routes>
       </div>
     </div>
