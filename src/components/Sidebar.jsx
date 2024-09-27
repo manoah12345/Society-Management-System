@@ -17,7 +17,8 @@ function Sidebar() {
       >
         Society Info
       </Link>
-      <Link className="h-[70px] w-[150px] flex items-center justify-center px-3 py-1 hover:border-black hover:border rounded hov  er:bg-red-500 hover:font-semibold"
+      <Link 
+      className="h-[70px] w-[150px] flex items-center justify-center px-3 py-1 hover:border-black hover:border rounded hover:bg-red-500 hover:font-semibold"
          to="/members"
       >
         Members
