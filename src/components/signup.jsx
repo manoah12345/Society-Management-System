@@ -1,11 +1,7 @@
-/* eslint-disable react/jsx-no-undef */
-import { useState } from "react";
+import React, { useState } from "react";
 import { auth, db } from "../config/firebase-config";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
-import { useNavigate, Link } from "react-router-dom";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 import { doc, setDoc } from "firebase/firestore";
 
 export const Signup = () => {
@@ -13,13 +9,27 @@ export const Signup = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
-  const [flatNo, setflatNo] = useState("");
+  const [flatNo, setFlatNo] = useState("");
   const [member, setMember] = useState("");
+  const [birthdate, setBirthdate] = useState("");
+  const [age, setAge] = useState("");
+  const [gender, setGender] = useState("Male");
+  const [occupation, setOccupation] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+
   const navigate = useNavigate();
+
+  const formatDate = (dateStr) => {
+    const date = new Date(dateStr);
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
 
   const signUp = async (e) => {
     e.preventDefault();
-    if (password != confirmPassword) {
+    if (password !== confirmPassword) {
       alert("Passwords do not match.");
       navigate("/signup");
     }
@@ -30,16 +40,21 @@ export const Signup = () => {
         password
       );
       const user = userCredential.user;
-      console.log("User signed up:", user);
-      console.log(displayName);
+      const formattedBirthdate = formatDate(birthdate);
+
       await setDoc(doc(db, "users", user.uid), {
         email: user.email,
-        displayName: displayName, // Add any other user info you want to store
+        displayName: displayName,
         createdAt: new Date(),
         flatNo: flatNo,
         role: member,
+        birthdate: formattedBirthdate,
+        age: age,
+        gender: gender,
+        occupation: occupation,
+        phoneNumber: phoneNumber,
       });
-      console.log("User added to Firestore");
+
       navigate("/");
     } catch (error) {
       console.error("Error signing up: ", error);
@@ -48,11 +63,18 @@ export const Signup = () => {
 
   return (
     <div className="h-[100vh] w-full flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
-        <h2 className="text-2xl font-bold text-center mb-6">Sign Up</h2>
+      <div
+        className="bg-white p-6 rounded-lg shadow-md w-full max-w-md overflow-auto"
+        style={{ maxHeight: "90vh" }}
+      >
+        <h2 className="text-xl font-bold text-center mb-4">Sign Up</h2>
         <form onSubmit={signUp}>
-          <div className="mb-4">
-            <label htmlFor="displayName" className="block text-gray-700 mb-2">
+          {/* Name */}
+          <div className="mb-2">
+            <label
+              htmlFor="displayName"
+              className="block text-gray-700 text-sm"
+            >
               Name
             </label>
             <input
@@ -60,12 +82,14 @@ export const Signup = () => {
               id="displayName"
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+              className="w-full px-2 py-1 border-[0.5px] border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
               required
             />
           </div>
-          <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-700 mb-2">
+
+          {/* Email */}
+          <div className="mb-2">
+            <label htmlFor="email" className="block text-gray-700 text-sm">
               Email
             </label>
             <input
@@ -73,13 +97,14 @@ export const Signup = () => {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+              className="w-full px-2 py-1 border-[0.5px] border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
               required
             />
           </div>
 
-          <div className="mb-4">
-            <label htmlFor="password" className="block text-gray-700 mb-2">
+          {/* Password */}
+          <div className="mb-2">
+            <label htmlFor="password" className="block text-gray-700 text-sm">
               Password
             </label>
             <input
@@ -87,50 +112,54 @@ export const Signup = () => {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+              className="w-full px-2 py-1 border-[0.5px] border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
               required
             />
           </div>
 
-          <div className="mb-4">
+          {/* Confirm Password */}
+          <div className="mb-2">
             <label
-              htmlFor="confirmpassword"
-              className="block text-gray-700 mb-2"
+              htmlFor="confirmPassword"
+              className="block text-gray-700 text-sm"
             >
               Confirm Password
             </label>
             <input
               type="password"
-              id="confirmpassword"
+              id="confirmPassword"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+              className="w-full px-2 py-1 border-[0.5px] border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
               required
             />
           </div>
-          <div className="mb-4">
-            <label htmlFor="flatNo" className="block text-gray-700 mb-2">
+
+          {/* Flat No */}
+          <div className="mb-2">
+            <label htmlFor="flatNo" className="block text-gray-700 text-sm">
               Flat No
             </label>
             <input
               type="number"
               id="flatNo"
               value={flatNo}
-              onChange={(e) => setflatNo(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+              onChange={(e) => setFlatNo(e.target.value)}
+              className="w-full px-2 py-1 border-[0.5px] border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
               required
             />
           </div>
-          <div className="mb-4">
-            <label htmlFor="member" className="block text-gray-700 mb-2">
+
+          {/* Role */}
+          <div className="mb-2">
+            <label htmlFor="member" className="block text-gray-700 text-sm">
               Role
             </label>
             <select
-              type="text"
               id="member"
               value={member}
               onChange={(e) => setMember(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+              className="w-full px-2 py-1 border-[0.5px] border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
               required
             >
               <option value="Secretary">Secretary</option>
@@ -140,10 +169,91 @@ export const Signup = () => {
             </select>
           </div>
 
-          <button className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-200">
+          {/* Birthdate */}
+          <div className="mb-2">
+            <label htmlFor="birthdate" className="block text-gray-700 text-sm">
+              Birthdate
+            </label>
+            <input
+              type="date"
+              id="birthdate"
+              value={birthdate}
+              onChange={(e) => setBirthdate(e.target.value)}
+              className="w-full px-2 py-1 border-[0.5px] border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+              required
+            />
+          </div>
+
+          {/* Age */}
+          <div className="mb-2">
+            <label htmlFor="age" className="block text-gray-700 text-sm">
+              Age
+            </label>
+            <input
+              type="number"
+              id="age"
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
+              className="w-full px-2 py-1 border-[0.5px] border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+              required
+            />
+          </div>
+
+          {/* Gender */}
+          <div className="mb-2">
+            <label htmlFor="gender" className="block text-gray-700 text-sm">
+              Gender
+            </label>
+            <select
+              id="gender"
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
+              className="w-full px-2 py-1 border-[0.5px] border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+              required
+            >
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          {/* Occupation */}
+          <div className="mb-2">
+            <label htmlFor="occupation" className="block text-gray-700 text-sm">
+              Occupation
+            </label>
+            <input
+              type="text"
+              id="occupation"
+              value={occupation}
+              onChange={(e) => setOccupation(e.target.value)}
+              className="w-full px-2 py-1 border-[0.5px] border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+              required
+            />
+          </div>
+
+          {/* Phone Number */}
+          <div className="mb-2">
+            <label
+              htmlFor="phoneNumber"
+              className="block text-gray-700 text-sm"
+            >
+              Phone Number
+            </label>
+            <input
+              type="tel"
+              id="phoneNumber"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              className="w-full px-2 py-1 border-[0.5px] border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+              required
+            />
+          </div>
+
+          <button className="w-full bg-blue-500 text-white py-1.5 rounded-md hover:bg-blue-600 transition duration-200">
             Sign Up
           </button>
-          <a href="/auth" className="text-blue-600 underline mt-4 block">
+          <a href="/auth" className="text-blue-600 underline mt-2 block">
             Already have an account
           </a>
         </form>

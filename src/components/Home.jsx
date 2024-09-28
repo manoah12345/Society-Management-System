@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../config/firebase-config";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const [totalMembers, setTotalMembers] = useState(0);
+  const navigate = useNavigate();
 
   // Fetch total number of users (members) from Firestore
   useEffect(() => {
@@ -19,18 +21,25 @@ function Home() {
     fetchTotalUsers();
   }, []);
 
+  const handleTotalMembersClick = () => {
+    navigate("/members"); // Redirect to the /members page
+  };
+
   return (
     <div className="h-full w-[82%] flex justify-around py-3 items-start">
-      <h1 className="px-10 py-7 border rounded bg-white">
+      <div className="px-10 py-7 border rounded bg-white cursor-pointer hover:bg-gray-100 transition duration-200">
         Total number of Vehicles
-      </h1>
-      <h1 className="px-10 py-7 border rounded bg-white">
+      </div>
+      <div
+        className="px-10 py-7 border rounded bg-white cursor-pointer hover:bg-gray-100 transition duration-200"
+        onClick={handleTotalMembersClick}
+      >
         Total Members: {totalMembers}
-      </h1>
-      <h1 className="px-10 py-7 border rounded bg-white">
+      </div>
+      <div className="px-10 py-7 border rounded bg-white cursor-pointer hover:bg-gray-100 transition duration-200">
         {" "}
         Remaining empty Blocks
-      </h1>
+      </div>
     </div>
   );
 }
