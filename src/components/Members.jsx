@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "../config/firebase-config"; // Adjust this to your Firebase config location
+import Chatbox from "./Chatbox";
 
 function Members() {
   const [members, setMembers] = useState([]);
@@ -80,6 +81,7 @@ function Members() {
           ))}
         </div>
       </div>
+      <Chatbox />
     </div>
   );
 }

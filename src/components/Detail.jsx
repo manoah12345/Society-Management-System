@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../config/firebase-config";
+import Chatbox from "./Chatbox";
 
 function Detail() {
   const [userData, setUserData] = useState(null);
@@ -60,6 +61,7 @@ function Detail() {
       <button className="w-full h-10 border rounded bg-white text-black border-black mt-3">
         Edit Info
       </button>
+      <Chatbox />
     </div>
   );
 }

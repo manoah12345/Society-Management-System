@@ -10,12 +10,14 @@ const Chat = ({ selectedUser }) => {
 
   // Create a unique chat ID by concatenating user IDs
   const chatId =
-    currentUserId < selectedUser.id
-      ? `${currentUserId}_${selectedUser.id}`
-      : `${selectedUser.id}_${currentUserId}`;
+    currentUserId && selectedUser
+      ? currentUserId < selectedUser.id
+        ? `${currentUserId}_${selectedUser.id}`
+        : `${selectedUser.id}_${currentUserId}`
+      : null; // Set chatId to null if either ID is missing
 
   useEffect(() => {
-    if (selectedUser) {
+    if (selectedUser && chatId) {
       // Subscribe to messages for the selected user using the unique chat ID
       const messagesRef = collection(db, `chats/${chatId}/messages`);
       const unsubscribe = onSnapshot(messagesRef, (snapshot) => {
@@ -62,28 +64,34 @@ const Chat = ({ selectedUser }) => {
 
       {/* Chat Messages Display Area */}
       <div className="flex-1 overflow-y-auto mb-4 p-2 border border-gray-300 rounded-lg bg-white">
-        {messages.map((msg) => (
-          <div
-            key={msg.id}
-            className={`mb-2 ${
-              msg.senderId === currentUserId ? "text-right" : "text-left"
-            }`}
-          >
-            <span
-              className={`font-medium ${
-                msg.senderId === currentUserId
-                  ? "text-blue-600"
-                  : "text-gray-800"
+        {messages.length > 0 ? (
+          messages.map((msg) => (
+            <div
+              key={msg.id}
+              className={`mb-2 ${
+                msg.senderId === currentUserId ? "text-right" : "text-left"
               }`}
             >
-              {msg.senderId === currentUserId
-                ? "You"
-                : selectedUser.displayName}
-              :
-            </span>{" "}
-            <span>{msg.text}</span>
+              <span
+                className={`font-medium ${
+                  msg.senderId === currentUserId
+                    ? "text-blue-600"
+                    : "text-gray-800"
+                }`}
+              >
+                {msg.senderId === currentUserId
+                  ? "You"
+                  : selectedUser.displayName}
+                :
+              </span>{" "}
+              <span>{msg.text}</span>
+            </div>
+          ))
+        ) : (
+          <div className="text-center text-gray-500">
+            No messages yet. Start the conversation!
           </div>
-        ))}
+        )}
       </div>
 
       {/* Message Input Area */}

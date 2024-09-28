@@ -3,6 +3,7 @@ import { CgProfile } from "react-icons/cg";
 import { Link } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../config/firebase-config";
+import Chatbox from "./Chatbox";
 
 function Profile() {
   const email = auth?.currentUser?.email;
@@ -53,6 +54,7 @@ function Profile() {
           </tr>
         </table>
       </div>
+      <Chatbox />
     </div>
   );
 }
