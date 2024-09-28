@@ -24,8 +24,10 @@ export const Auth = () => {
 
   return (
     <div className="h-[100vh] w-full flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
-        <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
+      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm"
+       style={{ boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)" }}
+      >
+        <h2 className="text-2xl font-bold text-center mb-6 text-green-900">Login</h2>
         <form>
           <div className="mb-4">
             <label htmlFor="email" className="block text-gray-700 mb-2">
@@ -57,7 +59,7 @@ export const Auth = () => {
 
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-200"
+            className="w-full bg-green-900 text-white py-2 px-4 rounded-md hover:bg-green-700 transition duration-200"
             onClick={logIn}
           >
             Login

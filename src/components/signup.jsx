@@ -64,10 +64,10 @@ export const Signup = () => {
   return (
     <div className="h-[100vh] w-full flex items-center justify-center bg-gray-100">
       <div
-        className="bg-white p-6 rounded-lg shadow-md w-full max-w-md overflow-auto"
-        style={{ maxHeight: "90vh" }}
+       className="bg-white p-6 rounded-t-lg rounded-b-lg shadow-lg w-full max-w-md overflow-auto"
+       style={{ maxHeight: "90vh", boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)" }}
       >
-        <h2 className="text-xl font-bold text-center mb-4">Sign Up</h2>
+        <h2 className="text-xl font-bold text-center mb-4 text-green-900">Sign Up</h2>
         <form onSubmit={signUp}>
           {/* Name */}
           <div className="mb-2">
@@ -250,7 +250,7 @@ export const Signup = () => {
             />
           </div>
 
-          <button className="w-full bg-blue-500 text-white py-1.5 rounded-md hover:bg-blue-600 transition duration-200">
+          <button className="w-full bg-green-900 text-white py-1.5 rounded-md hover:bg-green-700 transition duration-200">
             Sign Up
           </button>
           <a href="/auth" className="text-blue-600 underline mt-2 block">
