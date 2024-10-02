@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import Chat from "./Group-chat/chat";
 import Sidebar from "./Group-chat/Sidebar";
-import { ToastContainer } from "react-toastify"; // Import ToastContainer
-import "react-toastify/dist/ReactToastify.css"; // Import the CSS for notifications
 
 const Chatbox = () => {
   const [isChatOpen, setIsChatOpen] = useState(false); // State for chatbox visibility
@@ -62,9 +60,6 @@ const Chatbox = () => {
           <Chat selectedUser={selectedUser} />
         </div>
       </div>
-
-      {/* Add ToastContainer here for toast notifications */}
-      <ToastContainer />
     </div>
   );
 };
