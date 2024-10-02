@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import {
   collection,
-  getDocs,
   addDoc,
   deleteDoc,
   doc,
+  onSnapshot, // Import onSnapshot for real-time updates
 } from "firebase/firestore";
 import { db } from "../config/firebase-config";
 
@@ -12,45 +12,59 @@ function Notice({ role }) {
   const [notices, setNotices] = useState([]);
   const [newNotice, setNewNotice] = useState("");
 
-  // Fetch notices from Firestore
+  // Fetch notices from Firestore in real-time
   useEffect(() => {
-    const fetchNotices = async () => {
-      const querySnapshot = await getDocs(collection(db, "notices"));
-      const noticesList = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setNotices(noticesList);
-    };
+    const unsubscribe = onSnapshot(
+      collection(db, "notices"),
+      (querySnapshot) => {
+        const noticesList = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setNotices(noticesList);
+      },
+      (error) => {
+        console.error("Error fetching notices:", error);
+      }
+    );
 
-    fetchNotices();
+    // Cleanup the listener on component unmount
+    return () => unsubscribe();
   }, []);
 
   // Function to add a new notice (Chairman only)
   const handleAddNotice = async () => {
     console.log("Adding notice:", newNotice); // Debug log
     if (newNotice.trim()) {
-      await addDoc(collection(db, "notices"), {
-        text: newNotice,
-        createdAt: new Date(),
-      });
-      setNewNotice(""); // Clear the input field after adding
-      window.location.reload(); // Reload to reflect the added notice
+      try {
+        await addDoc(collection(db, "notices"), {
+          text: newNotice,
+          createdAt: new Date(),
+        });
+
+        setNewNotice(""); // Clear the input field after adding
+      } catch (error) {
+        console.error("Error adding notice:", error);
+        alert("Failed to add notice. Please try again."); // User feedback
+      }
     } else {
-      console.log("Notice cannot be empty"); // Debug log
+      alert("Notice cannot be empty"); // Alert for empty notice
     }
   };
-  
 
   // Function to delete a notice (Chairman only)
   const handleDeleteNotice = async (id) => {
-    await deleteDoc(doc(db, "notices", id));
-    window.location.reload(); // Reload to reflect the deleted notice
+    try {
+      await deleteDoc(doc(db, "notices", id));
+    } catch (error) {
+      console.error("Error deleting notice:", error);
+    }
   };
 
   return (
     <div className="w-full">
       <h2 className="text-xl font-bold">Notices</h2>
+
       {/* Only Chairman can add new notices */}
       {role === "Chairman" && (
         <div className="my-4">
@@ -91,4 +105,3 @@ function Notice({ role }) {
 }
 
 export default Notice;
-Notice.jsx;
