@@ -40,8 +40,11 @@ function Home() {
   };
 
   return (
-    <div className="h-full w-[82%] flex flex-col justify-around py-3 items-start">
-      <div className="flex justify-around w-full">
+    <div className="h-full w-full flex flex-col py-3 items-center">
+      {/* Container for statistics */}
+      <div className="flex justify-around w-full mb-4">
+        {" "}
+        {/* Added margin-bottom */}
         <div className="px-10 py-7 border rounded bg-white cursor-pointer hover:bg-gray-100 transition duration-200">
           Total number of Vehicles
         </div>
@@ -55,8 +58,25 @@ function Home() {
           Remaining empty Blocks
         </div>
       </div>
-      <Notice role={userRole} /> {/* Passing the role dynamically */}
-      <Chatbox />
+
+      {/* Spacer to push notices to the middle of the page */}
+      <div className="flex-grow"></div>
+
+      {/* Separate container for Notice component */}
+      <div className="flex items-center justify-center w-[80vw] h-full">
+        <div className="max-h-[60vh] w-full overflow-auto">
+          {" "}
+          {/* Set max height and enable scrolling if needed */}
+          <Notice role={userRole} /> {/* Passing the role dynamically */}
+        </div>
+      </div>
+
+      {/* Separate container for Chatbox */}
+      <div className="flex justify-center items-center w-full mt-4">
+        {" "}
+        {/* Added margin-top */}
+        <Chatbox />
+      </div>
     </div>
   );
 }
