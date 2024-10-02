@@ -1,34 +1,46 @@
 import React, { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 import { db } from "../config/firebase-config";
 import { useNavigate } from "react-router-dom";
 import Chatbox from "./Chatbox";
+import Notice from "./Notice"; // Import the Notice component
+import { auth } from "../config/firebase-config"; // Import auth to get the current user
 
 function Home() {
   const [totalMembers, setTotalMembers] = useState(0);
+  const [userRole, setUserRole] = useState(null); // State to store user role
   const navigate = useNavigate();
 
-  // Fetch total number of users (members) from Firestore
   useEffect(() => {
     const fetchTotalUsers = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, "users")); // Get all documents from the 'users' collection
-        setTotalMembers(querySnapshot.size); // Set the total number of users
-      } catch (error) {
-        console.error("Error fetching total members:", error);
+      const querySnapshot = await getDocs(collection(db, "users"));
+      setTotalMembers(querySnapshot.size);
+    };
+
+    const fetchUserRole = async () => {
+      const userId = auth.currentUser?.uid; // Get the current user ID
+      if (userId) {
+        const userDoc = await getDoc(doc(db, "users", userId)); // Fetch user document
+        if (userDoc.exists()) {
+          setUserRole(userDoc.data().role); // Assume 'role' is the field name in Firestore
+        } else {
+          console.error("No such user document!");
+        }
+      } else {
+        console.error("User is not authenticated.");
       }
     };
 
     fetchTotalUsers();
+    fetchUserRole();
   }, []);
 
   const handleTotalMembersClick = () => {
-    navigate("/members"); // Redirect to the /members page
+    navigate("/members");
   };
 
   return (
     <div className="h-full w-[82%] flex flex-col justify-around py-3 items-start">
-      {/* Existing content */}
       <div className="flex justify-around w-full">
         <div className="px-10 py-7 border rounded bg-white cursor-pointer hover:bg-gray-100 transition duration-200">
           Total number of Vehicles
@@ -43,6 +55,7 @@ function Home() {
           Remaining empty Blocks
         </div>
       </div>
+      <Notice role={userRole} /> {/* Passing the role dynamically */}
       <Chatbox />
     </div>
   );

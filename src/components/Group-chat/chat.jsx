@@ -13,6 +13,7 @@ const Chat = ({ selectedUser, toggleChatbox, handleUserSelect }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [senderNames, setSenderNames] = useState({});
+  const [loading, setLoading] = useState(true); // Loading state for messages
   const currentUserId = auth.currentUser?.uid;
   const textareaRef = useRef(null);
   const messagesEndRef = useRef(null);
@@ -51,7 +52,6 @@ const Chat = ({ selectedUser, toggleChatbox, handleUserSelect }) => {
 
   // Function to show a browser notification
   const showNotification = (senderName, messageText) => {
-    console.log("Notification:", senderName, messageText);
     if (Notification.permission === "granted") {
       new Notification(`New message from ${senderName}`, {
         body: messageText,
@@ -69,14 +69,15 @@ const Chat = ({ selectedUser, toggleChatbox, handleUserSelect }) => {
           ...doc.data(),
         }));
 
-        const sortedMessages = messagesData.sort((a, b) => {
-          return a.timestamp - b.timestamp;
-        });
+        const sortedMessages = messagesData.sort(
+          (a, b) => a.timestamp - b.timestamp
+        );
 
         if (isInitialLoad.current) {
           setMessages(sortedMessages);
           prevMessagesLength.current = sortedMessages.length;
           isInitialLoad.current = false;
+          setLoading(false); // Set loading to false after initial load
           return;
         }
 
@@ -86,9 +87,8 @@ const Chat = ({ selectedUser, toggleChatbox, handleUserSelect }) => {
 
           // Only notify if the message is not sent by the current user
           if (lastMessage.senderId !== currentUserId) {
-            // Notify for both one-on-one and group messages if the chat is closed
             const senderName = await getSenderName(lastMessage.senderId);
-            showNotification(senderName, lastMessage.text); // Show notification
+            showNotification(senderName, lastMessage.text);
           }
         }
 
@@ -163,14 +163,16 @@ const Chat = ({ selectedUser, toggleChatbox, handleUserSelect }) => {
   };
 
   return (
-    <div className="w-3/4 h-[95%] bg-gray-100 p-4 border-r border-gray-300 rounded-tr-[5px] rounded-br-[5px] flex flex-col">
+    <div className="w-full md:w-3/4 h-[95%] bg-gray-100 p-4 border-r border-gray-300 rounded-tr-[5px] rounded-br-[5px] flex flex-col">
       <div className="mb-4">
         <h2 className="text-lg font-bold">
           {selectedUser ? selectedUser.displayName : "Select a User"}
         </h2>
       </div>
       <div className="flex-1 overflow-y-auto mb-4 p-2 border border-gray-300 rounded-lg bg-white">
-        {messages.length > 0 ? (
+        {loading ? (
+          <div className="text-center text-gray-500">Loading messages...</div>
+        ) : messages.length > 0 ? (
           messages.map((msg) => (
             <div
               key={msg.id}
@@ -193,6 +195,13 @@ const Chat = ({ selectedUser, toggleChatbox, handleUserSelect }) => {
                 :
               </span>{" "}
               <span className="ml-1 whitespace-pre-wrap">{msg.text}</span>
+              <span className="text-gray-500 text-xs ml-2">
+                {new Date(msg.timestamp).toLocaleString("en-US", {
+                  hour: "numeric",
+                  minute: "numeric",
+                  hour12: true,
+                })}
+              </span>
             </div>
           ))
         ) : (
@@ -209,7 +218,7 @@ const Chat = ({ selectedUser, toggleChatbox, handleUserSelect }) => {
           onChange={handleChange}
           onKeyDown={handleKeyPress}
           className="flex-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-500 resize-none overflow-y-auto max-h-[100px]"
-          placeholder="Type your message..."
+          placeholder="Type your message here..."
           rows={1}
         />
         <button
