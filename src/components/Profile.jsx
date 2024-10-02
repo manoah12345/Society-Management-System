@@ -29,8 +29,8 @@ function Profile() {
   }, []);
 
   return (
-    <div className="h-full w-[82%]">
-      <div className="w-[86vw] h-[300px] bg-white flex flex-col items-center justify-center gap-3">
+    <div className="h-full w-full">
+      <div className="w-full h-[300px] bg-white flex flex-col items-center justify-center gap-3">
         <Link to="/profile/detail">
           <CgProfile className="text-[120px]" />
         </Link>

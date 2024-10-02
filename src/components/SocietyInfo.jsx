@@ -3,7 +3,7 @@ import Chatbox from "./Chatbox";
 
 function SocietyInfo() {
   return (
-    <div className="h-full w-[82%] py-3 px-5">
+    <div className="h-full w-full py-3 px-5">
       <h1 className="text-[40px] text-center">Unique</h1>
       <h3 className="text-center mb-2">C-65</h3>
       <div className="h-[70%] w-full bg-white rounded grid grid-cols-[150px,auto] grid-rows-5 p-2">

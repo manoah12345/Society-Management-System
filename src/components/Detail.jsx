@@ -26,7 +26,7 @@ function Detail() {
   }, []);
 
   return (
-    <div className="h-full w-[82%] p-5">
+    <div className="h-full w-full p-5">
       <h1 className="mb-5">Residents</h1>
       <div className="h-[80%] w-full bg-white rounded grid grid-cols-[150px,auto] grid-rows-7 p-2">
         <h3 className="text-center border border-black">Name</h3>

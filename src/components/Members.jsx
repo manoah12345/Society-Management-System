@@ -45,7 +45,7 @@ function Members() {
   }, []);
 
   return (
-    <div className="h-full w-[82%] py-3 px-5 flex justify-center text-lg">
+    <div className="h-full w-full py-3 px-5 flex justify-center text-lg">
       <div className="h-full">
         <div className="grid grid-cols-5 auto-rows-min w-full max-w-8xl border-2 bg-white border-black p-2">
           {/* Table Headers */}
