@@ -28,6 +28,7 @@ function Notice({ role }) {
 
   // Function to add a new notice (Chairman only)
   const handleAddNotice = async () => {
+    console.log("Adding notice:", newNotice); // Debug log
     if (newNotice.trim()) {
       await addDoc(collection(db, "notices"), {
         text: newNotice,
@@ -35,8 +36,11 @@ function Notice({ role }) {
       });
       setNewNotice(""); // Clear the input field after adding
       window.location.reload(); // Reload to reflect the added notice
+    } else {
+      console.log("Notice cannot be empty"); // Debug log
     }
   };
+  
 
   // Function to delete a notice (Chairman only)
   const handleDeleteNotice = async (id) => {
