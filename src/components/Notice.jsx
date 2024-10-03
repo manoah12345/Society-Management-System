@@ -89,7 +89,7 @@ function Notice({ role }) {
       {role === "Chairman" && (
         <div className="my-4">
           <textarea
-            className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y max-h-[150px] overflow-auto"
+            className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 resize-y max-h-[150px] overflow-auto"
             value={newNotice}
             onChange={(e) => setNewNotice(e.target.value)}
             placeholder="Add a new notice"
@@ -97,7 +97,7 @@ function Notice({ role }) {
           />
           <button
             onClick={handleAddNotice}
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg mt-2 transition duration-200 hover:bg-blue-600"
+            className="bg-red-700 text-white px-4 py-2 rounded-lg mt-2 transition duration-200 hover:bg-red-600"
           >
             Add Notice
           </button>
@@ -124,11 +124,12 @@ function Notice({ role }) {
               {/* Only Chairman can delete a notice */}
               {role === "Chairman" && (
                 <button
-                  onClick={() => handleDeleteNotice(notice.id)}
-                  className="text-red-500 transition duration-200 hover:text-red-600"
+                onClick={() => handleDeleteNotice(notice.id)}
+                className="relative inline-flex items-center justify-center p-2 transition duration-200 bg-transparent text-red-500 rounded-full hover:bg-gray-200 hover:text-red-600 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50"
                 >
-                  Delete
-                </button>
+                <span className="absolute inset-0 rounded-full ring-1 ring-gray-300 opacity-0 transition-opacity duration-200 hover:opacity-100"></span>
+                Delete
+                </button> 
               )}
             </li>
           ))}

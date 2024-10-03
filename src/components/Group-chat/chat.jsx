@@ -217,7 +217,7 @@ const Chat = ({ selectedUser, toggleChatbox, handleUserSelect }) => {
           value={message}
           onChange={handleChange}
           onKeyDown={handleKeyPress}
-          className="flex-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-500 resize-none overflow-y-auto max-h-[100px]"
+          className="flex-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-gray-400 resize-none overflow-y-auto max-h-[100px]"
           placeholder="Type your message here..."
           rows={1}
         />
@@ -226,7 +226,7 @@ const Chat = ({ selectedUser, toggleChatbox, handleUserSelect }) => {
           disabled={!message.trim()}
           className={`ml-2 px-4 py-2 rounded-lg transition duration-200 ${
             message.trim()
-              ? "bg-blue-600 text-white hover:bg-blue-700"
+              ? "bg-red-700 text-white hover:bg-red-600"
               : "bg-gray-300 text-gray-500 cursor-not-allowed"
           }`}
         >
