@@ -40,22 +40,20 @@ function Home() {
   };
 
   return (
-    <div className="h-full w-full flex flex-col py-3 items-center">
+    <div className="min-h-screen w-full flex flex-col py-6 items-center bg-gray-100">
       {/* Container for statistics */}
-      <div className="flex justify-around w-full mb-4">
-        {" "}
-        {/* Added margin-bottom */}
-        <div className="px-10 py-7 border rounded bg-white cursor-pointer hover:bg-gray-100 transition duration-200">
-          Total number of Vehicles
+      <div className="flex justify-around w-full mb-6">
+        <div className="px-10 py-7 border rounded bg-white shadow-md cursor-pointer hover:bg-gray-200 transition duration-200">
+          <p className="text-xl font-semibold text-gray-800">Total number of Vehicles</p>
         </div>
         <div
-          className="px-10 py-7 border rounded bg-white cursor-pointer hover:bg-gray-100 transition duration-200"
+          className="px-10 py-7 border rounded bg-white shadow-md cursor-pointer hover:bg-gray-200 transition duration-200"
           onClick={handleTotalMembersClick}
         >
-          Total Members: {totalMembers}
+          <p className="text-xl font-semibold text-red-600">Total Members: {totalMembers}</p>
         </div>
-        <div className="px-10 py-7 border rounded bg-white cursor-pointer hover:bg-gray-100 transition duration-200">
-          Remaining empty Blocks
+        <div className="px-10 py-7 border rounded bg-white shadow-md cursor-pointer hover:bg-gray-200 transition duration-200">
+          <p className="text-xl font-semibold text-gray-800">Remaining empty Blocks</p>
         </div>
       </div>
 
@@ -63,19 +61,17 @@ function Home() {
       <div className="flex-grow"></div>
 
       {/* Separate container for Notice component */}
-      <div className="flex items-center justify-center w-[80vw] h-full">
-        <div className="max-h-[60vh] w-full overflow-auto">
-          {" "}
-          {/* Set max height and enable scrolling if needed */}
+      <div className="flex items-center justify-center w-[80vw] h-full mb-6">
+        <div className="max-h-[60vh] w-full overflow-auto bg-gray-50 shadow-md border border-gray-200 rounded-lg p-6">
           <Notice role={userRole} /> {/* Passing the role dynamically */}
         </div>
       </div>
 
       {/* Separate container for Chatbox */}
       <div className="flex justify-center items-center w-full mt-4">
-        {" "}
-        {/* Added margin-top */}
-        <Chatbox />
+        <div className="w-[80vw] bg-gray-50 shadow-md border border-gray-200 rounded-lg p-4">
+          <Chatbox />
+        </div>
       </div>
     </div>
   );
