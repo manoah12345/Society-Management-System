@@ -40,20 +40,26 @@ function Home() {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col py-6 items-center bg-[#E2E3E5]  ">
+    <div className="min-h-screen w-full flex flex-col py-6 items-center bg-gray-100  ">
       {/* Container for statistics */}
       <div className="flex justify-around w-full mb-6">
         <div className="px-10 py-7 border rounded-xl bg-white cursor-pointer transition-all duration-300 shadow-[6px_6px_12px_#c5c5c5,-6px_-6px_12px_#ffffff] hover:bg-[#e8e8e8]">
-          <p className="text-xl font-semibold text-gray-800">Total number of Vehicles</p>
+          <p className="text-xl font-semibold text-gray-800">
+            Total number of Vehicles
+          </p>
         </div>
         <div
           className="px-10 py-7 border rounded-xl bg-white cursor-pointer transition-all duration-300 shadow-[6px_6px_12px_#c5c5c5,-6px_-6px_12px_#ffffff] hover:bg-[#e8e8e8] active:shadow-[inset_4px_4px_12px_#c5c5c5,inset_-4px_-4px_12px_#ffffff]"
           onClick={handleTotalMembersClick}
         >
-          <p className="text-xl font-semibold text-red-700">Total Members: {totalMembers}</p>
+          <p className="text-xl font-semibold text-red-700">
+            Total Members: {totalMembers}
+          </p>
         </div>
         <div className="px-10 py-7 border rounded-xl bg-white cursor-pointer transition-all duration-300 shadow-[6px_6px_12px_#c5c5c5,-6px_-6px_12px_#ffffff] hover:bg-[#e8e8e8]">
-          <p className="text-xl font-semibold text-gray-800">Remaining empty Blocks</p>
+          <p className="text-xl font-semibold text-gray-800">
+            Remaining empty Blocks
+          </p>
         </div>
       </div>
 
@@ -63,10 +69,9 @@ function Home() {
       {/* Separate container for Notice component */}
       <div className="flex items-center justify-center w-[80vw] h-full mb-6">
         <div className="max-h-[60vh] w-full overflow-auto bg-[#e8e8e8] border border-[#e8e8e8] rounded-lg p-6 shadow-lg transition-all duration-300 hover:shadow-[6px_6px_12px_rgba(197,197,197,0.5),_-6px_-6px_12px_rgba(255,255,255,0.5)] active:shadow-[inset_4px_4px_12px_rgba(197,197,197,0.5),_inset_-4px_-4px_12px_rgba(255,255,255,0.5)]">
-         <Notice role={userRole} /> {/* Passing the role dynamically */}
+          <Notice role={userRole} /> {/* Passing the role dynamically */}
         </div>
       </div>
-
 
       {/* Separate container for Chatbox */}
       <div className="flex justify-center items-center w-full mt-4">

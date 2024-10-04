@@ -3,24 +3,47 @@ import Chatbox from "./Chatbox";
 
 function SocietyInfo() {
   return (
-    <div className="h-full w-full py-3 px-5">
-      <h1 className="text-[40px] text-center">Unique</h1>
-      <h3 className="text-center mb-2">C-65</h3>
-      <div className="h-[70%] w-full bg-white rounded grid grid-cols-[150px,auto] grid-rows-5 p-2">
-        <h3 className="text-center border border-black">No of Blocks</h3>
-        <h3 className="px-1 border border-black">20</h3>
-        <h3 className="text-center border border-black">Updated Info</h3>
-        <h3 className="px-1 border border-black">15/06/2024</h3>
-        <h3 className="text-center border border-black">Address</h3>
-        <h3 className="px-1 border border-black">
-          Sec-10, Near SVP park, Shanti Nagar
+    <div className="h-full w-full py-8 px-8 bg-gray-100 flex flex-col items-center">
+      {/* Title Section */}
+      <h1 className="text-[40px] font-bold text-gray-800 mb-1">
+        Unique Society
+      </h1>
+      <h3 className="text-lg text-gray-600 mb-6">C-65</h3>
+
+      {/* Info Grid */}
+      <div className="w-full max-w-4xl bg-white rounded-lg shadow-lg p-6 grid grid-cols-2 gap-4">
+        <h3 className="text-center font-semibold text-gray-700 border-b pb-2">
+          No. of Blocks
         </h3>
-        <h3 className="text-center border border-black">City</h3>
-        <h3 className="px-1 border border-black">Mira-Bhayandar</h3>
-        <h3 className="text-center border border-black">State</h3>
-        <h3 className="px-1 border border-black">Maharashta</h3>
+        <p className="text-left text-gray-800 border-b pb-2 pl-3">20</p>
+
+        <h3 className="text-center font-semibold text-gray-700 border-b pb-2">
+          Updated Info
+        </h3>
+        <p className="text-left text-gray-800 border-b pb-2 pl-3">15/06/2024</p>
+
+        <h3 className="text-center font-semibold text-gray-700 border-b pb-2">
+          Address
+        </h3>
+        <p className="text-left text-gray-800 border-b pb-2 pl-3">
+          Sec-10, Near SVP park, Shanti Nagar
+        </p>
+
+        <h3 className="text-center font-semibold text-gray-700 border-b pb-2">
+          City
+        </h3>
+        <p className="text-left text-gray-800 border-b pb-2 pl-3">
+          Mira-Bhayandar
+        </p>
+
+        <h3 className="text-center font-semibold text-gray-700">State</h3>
+        <p className="text-left text-gray-800 pl-3">Maharashtra</p>
       </div>
-      <Chatbox />
+
+      {/* Chatbox Section */}
+      <div className="mt-10 w-full">
+        <Chatbox />
+      </div>
     </div>
   );
 }

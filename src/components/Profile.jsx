@@ -29,32 +29,44 @@ function Profile() {
   }, []);
 
   return (
-    <div className="h-full w-full">
-      <div className="w-full h-[300px] bg-white flex flex-col items-center justify-center gap-3">
+    <div className="min-h-screen w-full bg-gray-100 flex flex-col items-center">
+      {/* Profile Section */}
+      <div className="w-[50vw] bg-white flex flex-col items-center justify-center gap-4 shadow-lg mt-8 rounded-md p-6">
         <Link to="/profile/detail">
-          <CgProfile className="text-[120px]" />
+          <CgProfile className="text-[100px] text-gray-500 hover:text-gray-600 transition duration-300" />
         </Link>
-        <h1 className="text-3xl">
-          {userData ? userData.displayName : <p>Loading.....</p>}
+        <h1 className="text-3xl font-semibold text-gray-800">
+          {userData ? userData.displayName : "Loading..."}
         </h1>
+        <p className="text-gray-500">{email}</p>
+
+        {/* Info Table */}
+        <div className="w-full bg-gray-100 shadow-md rounded-lg mt-6 p-6">
+          <table className="w-full text-lg text-left table-fixed">
+            <tbody>
+              <tr className="border-b">
+                <td className="py-2 font-semibold text-gray-600">Flat No.</td>
+                <td className="py-2 text-gray-800 text-center">
+                  {userData ? userData.flatNo : "Loading..."}
+                </td>
+              </tr>
+              <tr className="border-b">
+                <td className="py-2 font-semibold text-gray-600">Role</td>
+                <td className="py-2 text-gray-800 text-center">
+                  {userData ? userData.role : "Loading..."}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-      <div className="w-[86vw] h-[40%] bg-blue-400 flex justify-center items-center text-[30px]">
-        <table className="border-2 border-black h-[50%] w-[32%] bg-white">
-          <tr className="border-2 border-black">
-            <td className="border-2 border-black text-center">Flat No.</td>
-            <td className="text-center">
-              {userData ? userData.flatNo : <p>Loading.....</p>}
-            </td>
-          </tr>
-          <tr>
-            <td className="border-2 border-black text-center">Role</td>
-            <td className="text-center">
-              {userData ? userData.role : <p>Loading.....</p>}
-            </td>
-          </tr>
-        </table>
+
+      {/* Info Table */}
+
+      {/* Chatbox Section */}
+      <div className="w-full mt-10">
+        <Chatbox />
       </div>
-      <Chatbox />
     </div>
   );
 }

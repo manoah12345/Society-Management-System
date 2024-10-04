@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { getDocs, collection } from "firebase/firestore";
-import { db } from "../config/firebase-config"; // Adjust this to your Firebase config location
+import { db } from "../config/firebase-config";
 import Chatbox from "./Chatbox";
 
 function Members() {
   const [members, setMembers] = useState([]);
 
   useEffect(() => {
-    // Fetch members from Firestore
     const fetchAllMembers = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, "users"));
@@ -16,7 +15,6 @@ function Members() {
           ...doc.data(),
         }));
 
-        // Define the role priority
         const rolePriority = {
           chairman: 1,
           secretary: 2,
@@ -24,18 +22,17 @@ function Members() {
           member: 4,
         };
 
-        // Sort members first by role, then by flatNo
         const sortedMembers = membersData.sort((a, b) => {
           const roleA = rolePriority[a.role.toLowerCase()];
           const roleB = rolePriority[b.role.toLowerCase()];
 
           if (roleA !== roleB) {
-            return roleA - roleB; // Sort by role priority
+            return roleA - roleB;
           }
-          return a.flatNo - b.flatNo; // Sort by flatNo if roles are the same
+          return a.flatNo - b.flatNo;
         });
 
-        setMembers(sortedMembers); // Set the sorted data in the state
+        setMembers(sortedMembers);
       } catch (error) {
         console.error("Error fetching members:", error);
       }
@@ -45,43 +42,55 @@ function Members() {
   }, []);
 
   return (
-    <div className="h-full w-full py-3 px-5 flex justify-center text-lg">
-      <div className="h-full">
-        <div className="grid grid-cols-5 auto-rows-min w-full max-w-8xl border-2 bg-white border-black p-2">
+    <div className="min-h-screen w-full py-10 px-5 flex flex-col items-center bg-gray-100">
+      <h1 className="text-4xl font-bold text-gray-800 mb-8">Members List</h1>
+
+      {/* Table */}
+      <div className="w-full max-w-6xl bg-white rounded-lg shadow-lg p-6">
+        <div className="grid grid-cols-5 auto-rows-min w-full border border-gray-300 rounded overflow-hidden">
           {/* Table Headers */}
-          <div className="border border-black p-4 font-semibold text-2xl">
+          <div className="border-b border-gray-300 bg-gray-200 p-4 font-semibold text-lg text-gray-700">
             No.
           </div>
-          <div className="border border-black p-4 font-semibold text-2xl">
+          <div className="border-b border-gray-300 bg-gray-200 p-4 font-semibold text-lg text-gray-700">
             Name
           </div>
-          <div className="border border-black p-4 font-semibold text-2xl">
+          <div className="border-b border-gray-300 bg-gray-200 p-4 font-semibold text-lg text-gray-700">
             Flat No
           </div>
-          <div className="border border-black p-4 font-semibold text-2xl">
+          <div className="border-b border-gray-300 bg-gray-200 p-4 font-semibold text-lg text-gray-700">
             Role
           </div>
-          <div className="border border-black p-4 font-semibold text-2xl">
+          <div className="border-b border-gray-300 bg-gray-200 p-4 font-semibold text-lg text-gray-700">
             Date of Joining
           </div>
 
-          {/* Table Rows - dynamically create rows based on members */}
+          {/* Table Rows */}
           {members.map((member, index) => (
             <React.Fragment key={member.id}>
-              <div className="border border-black p-4">{index + 1}</div>
-              <div className="border border-black p-4">
+              <div className="border-b border-gray-200 p-4 text-center">
+                {index + 1}
+              </div>
+              <div className="border-b border-gray-200 p-4">
                 {member.displayName}
               </div>
-              <div className="border border-black p-4">{member.flatNo}</div>
-              <div className="border border-black p-4">{member.role}</div>
-              <div className="border border-black p-4">
+              <div className="border-b border-gray-200 p-4 text-center">
+                {member.flatNo}
+              </div>
+              <div className="border-b border-gray-200 p-4 text-center capitalize">
+                {member.role}
+              </div>
+              <div className="border-b border-gray-200 p-4 text-center">
                 {new Date(member.createdAt.seconds * 1000).toLocaleDateString()}
               </div>
             </React.Fragment>
           ))}
         </div>
       </div>
-      <Chatbox />
+
+      <div className="mt-10 w-full max-w-6xl">
+        <Chatbox />
+      </div>
     </div>
   );
 }

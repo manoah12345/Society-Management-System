@@ -44,31 +44,31 @@ const Sidebar = ({ onUserSelect }) => {
   };
 
   return (
-    <div className="w-full md:w-1/4 h-[95%] bg-gray-300 p-4 border-r border-gray-300 rounded-tl-[5px] rounded-bl-[5px]">
+    <div className="w-full md:w-1/4 h-[95%] bg-gray-200 p-4 border-r border-gray-400 rounded-tl-lg rounded-bl-lg shadow-md">
       {/* Sidebar Header */}
       <div className="mb-4">
-        <h2 className="text-lg font-bold">Active Chats</h2>
+        <h2 className="text-lg font-semibold text-gray-800">Active Chats</h2>
       </div>
 
       {/* Loading Indicator */}
       {loading ? (
-        <div className="text-center text-gray-500">Loading users...</div>
+        <div className="text-center text-gray-600">Loading users...</div>
       ) : (
-        <ul className="space-y-4">
+        <ul className="space-y-2">
           {users.map((user, index) => (
             <React.Fragment key={user.id}>
-              {index === 1 && <hr className="my-2 border-gray-400" />}
+              {index === 1 && <hr className="my-2 border-gray-300" />}
               <li
                 onClick={() => handleUserSelect(user)}
-                className={`flex items-center p-2 rounded-lg shadow-md cursor-pointer transition duration-200 ${
+                className={`flex items-center p-3 rounded-lg transition duration-200 ${
                   selectedUser === user.id
-                    ? "bg-blue-200"
-                    : "bg-white hover:bg-gray-200"
-                }`}
+                    ? "bg-red-200" // Change to red when selected
+                    : "bg-white hover:bg-red-100" // Change hover effect to red
+                } shadow-sm`}
               >
-                <FiUser className="mr-2 text-gray-600" /> {/* User icon */}
+                <FiUser className="mr-3 text-gray-700" /> {/* User icon */}
                 <div className="flex-1">
-                  <span className="block text-sm font-medium">
+                  <span className="block text-sm font-medium text-gray-800">
                     {user.displayName}
                   </span>
                 </div>

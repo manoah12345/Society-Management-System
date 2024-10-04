@@ -19,7 +19,7 @@ const Chatbox = () => {
       {/* Chat Button (Chat Logo) */}
       <button
         onClick={toggleChatbox}
-        className="mt-6 p-3 bg-blue-600 rounded-full fixed bottom-5 right-5 hover:bg-blue-700 transition duration-200"
+        className="fixed bottom-5 right-5 p-4 bg-red-600 rounded-full shadow-lg hover:bg-red-500 hover:shadow-xl transition duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-red-300"
       >
         {/* SVG Icon for Chat */}
         <svg

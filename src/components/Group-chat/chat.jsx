@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { db } from "../../config/firebase-config"; // Import Firestore config
+import { db } from "../../config/firebase-config";
 import {
   collection,
   onSnapshot,
@@ -7,13 +7,13 @@ import {
   doc,
   getDoc,
 } from "firebase/firestore";
-import { auth } from "../../config/firebase-config"; // Import auth to get current user ID
+import { auth } from "../../config/firebase-config";
 
 const Chat = ({ selectedUser, toggleChatbox, handleUserSelect }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [senderNames, setSenderNames] = useState({});
-  const [loading, setLoading] = useState(true); // Loading state for messages
+  const [loading, setLoading] = useState(true);
   const currentUserId = auth.currentUser?.uid;
   const textareaRef = useRef(null);
   const messagesEndRef = useRef(null);
@@ -55,7 +55,7 @@ const Chat = ({ selectedUser, toggleChatbox, handleUserSelect }) => {
     if (Notification.permission === "granted") {
       new Notification(`New message from ${senderName}`, {
         body: messageText,
-        icon: "../../assets/react.svg", // Optional: specify an icon
+        icon: "../../assets/react.svg",
       });
     }
   };
@@ -77,7 +77,7 @@ const Chat = ({ selectedUser, toggleChatbox, handleUserSelect }) => {
           setMessages(sortedMessages);
           prevMessagesLength.current = sortedMessages.length;
           isInitialLoad.current = false;
-          setLoading(false); // Set loading to false after initial load
+          setLoading(false);
           return;
         }
 
@@ -163,29 +163,29 @@ const Chat = ({ selectedUser, toggleChatbox, handleUserSelect }) => {
   };
 
   return (
-    <div className="w-full md:w-3/4 h-[95%] bg-gray-100 p-4 border-r border-gray-300 rounded-tr-[5px] rounded-br-[5px] flex flex-col">
+    <div className="w-full md:w-3/4 h-[95%] bg-white p-4 border border-gray-300 rounded-r-lg shadow-md flex flex-col">
       <div className="mb-4">
-        <h2 className="text-lg font-bold">
+        <h2 className="text-xl font-semibold text-gray-800">
           {selectedUser ? selectedUser.displayName : "Select a User"}
         </h2>
       </div>
-      <div className="flex-1 overflow-y-auto mb-4 p-2 border border-gray-300 rounded-lg bg-white">
+      <div className="flex-1 overflow-y-auto mb-4 p-2 bg-gray-100 border border-gray-300 rounded-lg">
         {loading ? (
           <div className="text-center text-gray-500">Loading messages...</div>
         ) : messages.length > 0 ? (
           messages.map((msg) => (
             <div
               key={msg.id}
-              className={`mb-2 p-2 rounded-bl-[10px] rounded-br-[10px] w-fit max-w-[70%] ${
+              className={`mb-2 p-2 rounded-lg w-fit max-w-[70%] ${
                 msg.senderId === currentUserId
-                  ? "bg-blue-100 text-right ml-auto border border-b-0 border-blue-200 rounded-tl-[10px]"
-                  : "bg-gray-200 text-left rounded-tr-[10px]"
+                  ? "bg-red-100 text-right ml-auto border border-b-0 border-red-300 rounded-tr-none"
+                  : "bg-gray-300 text-left rounded-bl-none"
               } break-words`}
             >
               <span
                 className={`font-medium ${
                   msg.senderId === currentUserId
-                    ? "text-blue-600"
+                    ? "text-red-600"
                     : "text-gray-800"
                 }`}
               >
@@ -211,13 +211,13 @@ const Chat = ({ selectedUser, toggleChatbox, handleUserSelect }) => {
         )}
         <div ref={messagesEndRef} />
       </div>
-      <div className="flex">
+      <div className="flex mt-4">
         <textarea
           ref={textareaRef}
           value={message}
           onChange={handleChange}
           onKeyDown={handleKeyPress}
-          className="flex-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-gray-400 resize-none overflow-y-auto max-h-[100px]"
+          className="flex-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-gray-400 resize-none overflow-y-auto max-h-[100px] bg-white"
           placeholder="Type your message here..."
           rows={1}
         />
