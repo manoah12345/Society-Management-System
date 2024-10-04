@@ -18,10 +18,10 @@ function Navbar() {
   };
 
   return (
-    <nav className="h-[70px] w-full bg-gray-900 flex justify-between items-center px-6 text-white shadow-lg top-0 z-50">
+    <nav className="h-[70px] w-full bg-black flex justify-between items-center px-6 text-white shadow-lg top-0 z-50">
       {/* Navbar Title */}
       <div className="flex items-center">
-        <h1 className="font-bold text-2xl text-red-500 transition duration-300 hover:text-red-400 cursor-pointer">
+        <h1 className="font-bold text-2xl text-white transition duration-300 hover:text-gray-300 cursor-pointer">
           Society Management
         </h1>
       </div>

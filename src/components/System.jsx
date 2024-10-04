@@ -19,10 +19,10 @@ function System() {
         <Sidebar />
         <Routes>
           <Route path="/" element={<Home />}></Route>
-          <Route path="/profile" element={<Profile/>}></Route>
+          <Route path="/profile" element={<Profile />}></Route>
           <Route path="/profile/detail" element={<Detail />}></Route>
-          <Route path="/society" element={<SocietyInfo />}></Route>
-          <Route path="/members" element={<Members/>}></Route>
+          <Route path="/societyinfo" element={<SocietyInfo />}></Route>
+          <Route path="/members" element={<Members />}></Route>
         </Routes>
       </div>
     </div>
