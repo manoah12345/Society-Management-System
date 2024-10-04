@@ -49,19 +49,19 @@ function Members() {
       <div className="w-full max-w-6xl bg-white rounded-lg shadow-lg p-6">
         <div className="grid grid-cols-5 auto-rows-min w-full border border-gray-300 rounded overflow-hidden">
           {/* Table Headers */}
-          <div className="border-b border-gray-300 bg-gray-200 p-4 font-semibold text-lg text-gray-700">
+          <div className="border-b border-gray-300 bg-gray-200 p-4 font-semibold text-lg text-gray-700 text-center">
             No.
           </div>
           <div className="border-b border-gray-300 bg-gray-200 p-4 font-semibold text-lg text-gray-700">
             Name
           </div>
-          <div className="border-b border-gray-300 bg-gray-200 p-4 font-semibold text-lg text-gray-700">
+          <div className="border-b border-gray-300 bg-gray-200 p-4 font-semibold text-lg text-gray-700 text-center">
             Flat No
           </div>
-          <div className="border-b border-gray-300 bg-gray-200 p-4 font-semibold text-lg text-gray-700">
+          <div className="border-b border-gray-300 bg-gray-200 p-4 font-semibold text-lg text-gray-700 text-center">
             Role
           </div>
-          <div className="border-b border-gray-300 bg-gray-200 p-4 font-semibold text-lg text-gray-700">
+          <div className="border-b border-gray-300 bg-gray-200 p-4 font-semibold text-lg text-gray-700 text-center">
             Date of Joining
           </div>
 

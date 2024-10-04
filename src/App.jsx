@@ -31,7 +31,7 @@ function App() {
     <div className="w-full h-full">
       <Routes>
         <Route path="/auth" element={<Auth />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/register" element={<Signup />} />
         <Route path="*" element={user ? <System /> : <Navigate to="/auth" />} />
       </Routes>
     </div>
