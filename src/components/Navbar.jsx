@@ -18,31 +18,27 @@ function Navbar() {
   };
 
   return (
-    <div className="h-[70px] w-full bg-gray-900 flex justify-between items-center px-4 text-white shadow-lg">
+    <div className="neumorphic-navbar h-[70px] w-full flex justify-between items-center px-4 text-gray-900 bg-black shadow-md" style={{ boxShadow: "0 4px 15px rgba(0, 5, 0, 0.7)" }}>
       {/* Navbar Title */}
-      <h1 className="font-bold text-2xl text-red-500">Society Management System</h1>
+      <h1 className="font-bold text-2xl text-white">Society Management System</h1>
 
       {/* Navbar Links */}
-      <div className="h-full w-1/3 flex justify-around items-center text-lg">
-        <Link to="/">
-          <h3 className="h-[50px] w-[100px] flex items-center justify-center p-2 rounded hover:bg-gray-700 transition duration-200">
-            Home
-          </h3>
+      <div className="flex space-x-6">
+        <Link to="/" className="shadow-md px-4 py-2 rounded-lg hover:shadow-lg transition">
+          Home
         </Link>
-        <Link to="/profile/detail">
-          <CgProfile className="text-3xl hover:text-gray-400 transition duration-200" />
+        <Link to="/profile/detail" className="shadow-md p-2 rounded-full hover:shadow-lg transition">
+          <CgProfile className="text-3xl" />
         </Link>
-        <Link to="/about">
-          <h3 className="h-[50px] w-[100px] flex items-center justify-center p-2 rounded hover:bg-gray-700 transition duration-200">
-            About
-          </h3>
+        <Link to="/about" className="shadow-md px-4 py-2 rounded-lg hover:shadow-lg transition">
+          About
         </Link>
-        <h3
-          className="h-[50px] w-[100px] flex items-center justify-center p-2 rounded bg-red-600 hover:bg-red-500 transition duration-200 cursor-pointer"
+        <button
+          className="shadow-md px-4 py-2 bg-red-700 text-white rounded-xl hover:bg-red-600 hover:shadow-lg transition"
           onClick={logOut}
         >
           Log Out
-        </h3>
+        </button>
       </div>
     </div>
   );
