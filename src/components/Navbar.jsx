@@ -21,6 +21,33 @@ function Navbar() {
     <nav className="h-[70px] w-full bg-black flex justify-between items-center px-6 text-white shadow-lg top-0 z-50">
       {/* Navbar Title */}
       <div className="flex items-center">
+        <svg
+          width="80"
+          height="80"
+          viewBox="0 0 200 200"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="95"
+            cy="100"
+            r="70"
+            fill="white"
+            stroke="black"
+            strokeWidth="2"
+          />
+          <rect x="40" y="90" width="40" height="40" fill="black" />
+          <polygon points="40,90 60,70 80,90" fill="red" />
+          <rect x="48" y="100" width="10" height="10" fill="#fff" />
+
+          <rect x="110" y="90" width="40" height="40" fill="black" />
+          <polygon points="110,90 130,70 150,90" fill="red" />
+          <rect x="118" y="100" width="10" height="10" fill="#fff" />
+
+          <rect x="90" y="115" width="10" height="20" fill="black" />
+          <circle cx="95" cy="105" r="15" fill="red" />
+          <circle cx="80" cy="105" r="10" fill="red" />
+          <circle cx="110" cy="105" r="10" fill="red" />
+        </svg>
         <h1 className="font-bold text-2xl text-white transition duration-300 hover:text-gray-300 cursor-pointer">
           Society Management
         </h1>
