@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-undef */
 import { useState } from "react";
 import { auth } from "../config/firebase-config";
 import {
@@ -26,8 +25,10 @@ export const Auth = () => {
   return (
     <div className="h-[100vh] w-full flex items-center justify-center bg-gray-200">
       <div
-        className="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm"
-        style={{ boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)" }}
+        className="bg-[#e0e0e0] p-8 rounded-[50px] shadow-lg w-full max-w-sm" // Updated styles
+        style={{
+          boxShadow: "12px 12px 28px #bababa, -12px -12px 28px #ffffff", // Custom box shadow
+        }}
       >
         <h2 className="text-2xl font-bold text-center mb-6 text-red-700">
           Login

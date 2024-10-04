@@ -3,7 +3,7 @@ import Chatbox from "./Chatbox";
 
 function SocietyInfo() {
   return (
-    <div className="h-full w-full py-8 px-8 bg-gray-100 flex flex-col items-center">
+    <div className="h-full w-full py-8 px-8 bg-[#E2E3E5] flex flex-col items-center">
       {/* Title Section */}
       <h1 className="text-[40px] font-bold text-gray-800 mb-1">
         Unique Society
@@ -11,7 +11,14 @@ function SocietyInfo() {
       <h3 className="text-lg text-gray-600 mb-6">C-65</h3>
 
       {/* Info Grid */}
-      <div className="w-full max-w-4xl bg-white rounded-lg shadow-lg p-6 grid grid-cols-2 gap-4">
+      <div
+        className="w-full max-w-4xl p-6 grid grid-cols-2 gap-4"
+        style={{
+          borderRadius: "50px",
+          background: "#e0e0e0",
+          boxShadow: "12px 12px 28px #bababa, -12px -12px 28px #ffffff",
+        }}
+      >
         <h3 className="text-center font-semibold text-gray-700 border-b pb-2">
           No. of Blocks
         </h3>

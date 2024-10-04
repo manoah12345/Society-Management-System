@@ -3,7 +3,7 @@ import Chatbox from "./Chatbox";
 
 const Account = () => {
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full bg-[#E2E3E5]">
       Account
       <Chatbox />
     </div>

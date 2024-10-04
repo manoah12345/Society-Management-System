@@ -29,9 +29,16 @@ function Profile() {
   }, []);
 
   return (
-    <div className="min-h-screen w-full bg-gray-100 flex flex-col items-center">
+    <div className="min-h-screen w-full bg-[#E2E3E5] flex flex-col items-center">
       {/* Profile Section */}
-      <div className="w-[50vw] bg-white flex flex-col items-center justify-center gap-4 shadow-lg mt-8 rounded-md p-6">
+      <div
+        className="w-[50vw] flex flex-col items-center justify-center gap-4 mt-8 p-6"
+        style={{
+          borderRadius: "50px",
+          background: "#e0e0e0",
+          boxShadow: "12px 12px 28px #bababa, -12px -12px 28px #ffffff",
+        }}
+      >
         <Link to="/profile/detail">
           <CgProfile className="text-[100px] text-gray-500 hover:text-gray-600 transition duration-300" />
         </Link>
@@ -60,8 +67,6 @@ function Profile() {
           </table>
         </div>
       </div>
-
-      {/* Info Table */}
 
       {/* Chatbox Section */}
       <div className="w-full mt-10">

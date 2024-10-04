@@ -40,7 +40,7 @@ function Home() {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col py-6 items-center bg-gray-100  ">
+    <div className="min-h-screen w-full flex flex-col py-6 items-center bg-[#E2E3E5]">
       {/* Container for statistics */}
       <div className="flex justify-around w-full mb-6">
         <div className="px-10 py-7 border rounded-xl bg-white cursor-pointer transition-all duration-300 shadow-[6px_6px_12px_#c5c5c5,-6px_-6px_12px_#ffffff] hover:bg-[#e8e8e8]">
@@ -68,7 +68,11 @@ function Home() {
 
       {/* Separate container for Notice component */}
       <div className="flex items-center justify-center w-[80vw] h-full mb-6">
-        <div className="max-h-[60vh] w-full overflow-auto bg-[#e8e8e8] border border-[#e8e8e8] rounded-lg p-6 shadow-lg transition-all duration-300 hover:shadow-[6px_6px_12px_rgba(197,197,197,0.5),_-6px_-6px_12px_rgba(255,255,255,0.5)] active:shadow-[inset_4px_4px_12px_rgba(197,197,197,0.5),_inset_-4px_-4px_12px_rgba(255,255,255,0.5)]">
+        <div className="max-h-[60vh] w-full overflow-auto bg-[#e0e0e0] border border-[#e8e8e8] rounded-[50px] p-6 
+            shadow-[12px_12px_28px_#bababa,-12px_-12px_28px_#ffffff] 
+            transition-all duration-300 
+            hover:shadow-[12px_12px_28px_#bababa,-12px_-12px_28px_#ffffff]
+            active:shadow-[inset_4px_4px_12px_rgba(197,197,197,0.5),_inset_-4px_-4px_12px_rgba(255,255,255,0.5)]">
           <Notice role={userRole} /> {/* Passing the role dynamically */}
         </div>
       </div>

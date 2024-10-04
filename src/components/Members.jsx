@@ -42,11 +42,18 @@ function Members() {
   }, []);
 
   return (
-    <div className="min-h-screen w-full py-10 px-5 flex flex-col items-center bg-gray-100">
+    <div className="min-h-screen w-full py-10 px-5 flex flex-col items-center bg-[#E2E3E5]">
       <h1 className="text-4xl font-bold text-gray-800 mb-8">Members List</h1>
 
       {/* Table */}
-      <div className="w-full max-w-6xl bg-white rounded-lg shadow-lg p-6">
+      <div
+        className="w-full max-w-6xl p-6"
+        style={{
+          borderRadius: "50px",
+          background: "#e0e0e0",
+          boxShadow: "12px 12px 28px #bababa, -12px -12px 28px #ffffff",
+        }}
+      >
         <div className="grid grid-cols-5 auto-rows-min w-full border border-gray-300 rounded overflow-hidden">
           {/* Table Headers */}
           <div className="border-b border-gray-300 bg-gray-200 p-4 font-semibold text-lg text-gray-700 text-center">

@@ -12,6 +12,7 @@ import { db } from "../config/firebase-config";
 function Notice({ role }) {
   const [notices, setNotices] = useState([]);
   const [newNotice, setNewNotice] = useState("");
+  const [importance, setImportance] = useState("optional"); // New state for importance
 
   // Fetch notices from Firestore in real-time
   useEffect(() => {
@@ -23,10 +24,20 @@ function Notice({ role }) {
           ...doc.data(),
         }));
 
-        // Sort notices by createdAt in descending order
-        noticesList.sort(
-          (a, b) => b.createdAt.toMillis() - a.createdAt.toMillis()
-        );
+        // Sort notices by importance first, then by createdAt in descending order
+        noticesList.sort((a, b) => {
+          // Importance ranking: very important > important > optional
+          const importanceRank = {
+            "very important": 1,
+            important: 2,
+            optional: 3,
+          };
+
+          return (
+            importanceRank[a.importance] - importanceRank[b.importance] ||
+            b.createdAt.toMillis() - a.createdAt.toMillis()
+          );
+        });
 
         setNotices(noticesList);
       },
@@ -46,9 +57,11 @@ function Notice({ role }) {
         await addDoc(collection(db, "notices"), {
           text: newNotice,
           createdAt: Timestamp.now(),
+          importance, // Include importance level in the new notice
         });
 
         setNewNotice(""); // Clear the input field after adding
+        setImportance("optional"); // Reset importance selection
       } catch (error) {
         console.error("Error adding notice:", error);
         alert("Failed to add notice. Please try again.");
@@ -81,6 +94,20 @@ function Notice({ role }) {
     return `${formattedDate} at ${formattedTime}`; // Combine date and time
   };
 
+  // Function to get dot color based on importance
+  const getDotColor = (importance) => {
+    switch (importance) {
+      case "very important":
+        return "bg-red-700"; // Red for very important
+      case "important":
+        return "bg-orange-500"; // Orange for important
+      case "optional":
+        return "bg-yellow-500"; // Yellow for optional
+      default:
+        return "bg-gray-400"; // Default color
+    }
+  };
+
   return (
     <div className="w-full p-4 bg-gray-100 rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-4">Notices</h2>
@@ -95,6 +122,15 @@ function Notice({ role }) {
             placeholder="Add a new notice"
             rows="3"
           />
+          <select
+            value={importance}
+            onChange={(e) => setImportance(e.target.value)}
+            className="mt-2 mb-4 border rounded-lg p-2 w-full"
+          >
+            <option value="optional">Optional</option>
+            <option value="important">Important</option>
+            <option value="very important">Very Important</option>
+          </select>
           <button
             onClick={handleAddNotice}
             className="bg-red-700 text-white px-4 py-2 rounded-lg mt-2 transition duration-200 hover:bg-red-600"
@@ -114,22 +150,25 @@ function Notice({ role }) {
               key={notice.id}
               className="border-b py-3 flex justify-between items-start bg-white rounded-lg shadow-sm mb-2 transition duration-200 hover:bg-gray-50 px-3"
             >
-              <div>
-                <span className="font-semibold">{notice.text}</span>
-                <div className="text-gray-500 text-sm">
-                  {formatDate(notice.createdAt)}{" "}
-                  {/* Display formatted date and time */}
+              <div className="flex items-start">
+                <div className={`w-3 h-3 rounded-full mr-2 ${getDotColor(notice.importance)}`} />
+                <div>
+                  <span className="font-semibold">{notice.text}</span>
+                  <div className="text-gray-500 text-sm">
+                    {formatDate(notice.createdAt)}{" "}
+                    {/* Display formatted date and time */}
+                  </div>
                 </div>
               </div>
               {/* Only Chairman can delete a notice */}
               {role === "Chairman" && (
                 <button
-                onClick={() => handleDeleteNotice(notice.id)}
-                className="relative inline-flex items-center justify-center p-2 transition duration-200 bg-transparent text-red-500 rounded-full hover:bg-gray-200 hover:text-red-600 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50"
+                  onClick={() => handleDeleteNotice(notice.id)}
+                  className="relative inline-flex items-center justify-center p-2 transition duration-200 bg-transparent text-red-500 rounded-full hover:bg-gray-200 hover:text-red-600 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50"
                 >
-                <span className="absolute inset-0 rounded-full ring-1 ring-gray-300 opacity-0 transition-opacity duration-200 hover:opacity-100"></span>
-                Delete
-                </button> 
+                  <span className="absolute inset-0 rounded-full ring-1 ring-gray-300 opacity-0 transition-opacity duration-200 hover:opacity-100"></span>
+                  Delete
+                </button>
               )}
             </li>
           ))}
