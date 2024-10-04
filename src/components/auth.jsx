@@ -23,7 +23,7 @@ export const Auth = () => {
   };
 
   return (
-    <div className="h-[100vh] w-full flex items-center justify-center bg-gray-200">
+    <div className="h-[100vh] w-full flex items-center justify-center bg-[#E2E3E5]">
       <div
         className="bg-[#e0e0e0] p-8 rounded-[50px] shadow-lg w-full max-w-sm" // Updated styles
         style={{
