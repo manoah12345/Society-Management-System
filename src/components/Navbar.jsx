@@ -13,7 +13,7 @@ function Navbar() {
       await signOut(auth);
       navigate("/auth");
     } catch (error) {
-      console.error(error);
+      console.error("Logout error:", error);
     }
   };
 
@@ -59,7 +59,7 @@ function Navbar() {
           <h3 className="transition duration-300 hover:text-gray-400">Home</h3>
         </Link>
 
-        <Link to="/profile/detail">
+        <Link to="/profile/detail" aria-label="Profile">
           <CgProfile className="text-3xl transition duration-300 hover:text-gray-400 cursor-pointer" />
         </Link>
 
@@ -70,6 +70,7 @@ function Navbar() {
         <button
           onClick={logOut}
           className="px-4 py-2 bg-red-600 text-white rounded-md transition duration-300 hover:bg-red-500"
+          aria-label="Log Out"
         >
           Log Out
         </button>

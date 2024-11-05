@@ -12,7 +12,9 @@ import { db } from "../config/firebase-config";
 function Notice({ role }) {
   const [notices, setNotices] = useState([]);
   const [newNotice, setNewNotice] = useState("");
-  const [importance, setImportance] = useState("optional"); // New state for importance
+  const [importance, setImportance] = useState("optional");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   // Fetch notices from Firestore in real-time
   useEffect(() => {
@@ -24,15 +26,13 @@ function Notice({ role }) {
           ...doc.data(),
         }));
 
-        // Sort notices by importance first, then by createdAt in descending order
+        // Sort notices by importance and createdAt
         noticesList.sort((a, b) => {
-          // Importance ranking: very important > important > optional
           const importanceRank = {
             "very important": 1,
             important: 2,
             optional: 3,
           };
-
           return (
             importanceRank[a.importance] - importanceRank[b.importance] ||
             b.createdAt.toMillis() - a.createdAt.toMillis()
@@ -43,28 +43,32 @@ function Notice({ role }) {
       },
       (error) => {
         console.error("Error fetching notices:", error);
+        setError("Failed to fetch notices. Please refresh.");
       }
     );
 
-    // Cleanup the listener on component unmount
     return () => unsubscribe();
   }, []);
 
   // Function to add a new notice (Chairman only)
   const handleAddNotice = async () => {
     if (newNotice.trim()) {
+      setLoading(true);
+      setError(null);
       try {
         await addDoc(collection(db, "notices"), {
           text: newNotice,
           createdAt: Timestamp.now(),
-          importance, // Include importance level in the new notice
+          importance,
         });
 
-        setNewNotice(""); // Clear the input field after adding
-        setImportance("optional"); // Reset importance selection
+        setNewNotice("");
+        setImportance("optional");
       } catch (error) {
         console.error("Error adding notice:", error);
-        alert("Failed to add notice. Please try again.");
+        setError("Failed to add notice. Please try again.");
+      } finally {
+        setLoading(false);
       }
     } else {
       alert("Notice cannot be empty");
@@ -73,10 +77,13 @@ function Notice({ role }) {
 
   // Function to delete a notice (Chairman only)
   const handleDeleteNotice = async (id) => {
-    try {
-      await deleteDoc(doc(db, "notices", id));
-    } catch (error) {
-      console.error("Error deleting notice:", error);
+    if (window.confirm("Are you sure you want to delete this notice?")) {
+      try {
+        await deleteDoc(doc(db, "notices", id));
+      } catch (error) {
+        console.error("Error deleting notice:", error);
+        alert("Failed to delete notice. Please try again.");
+      }
     }
   };
 
@@ -90,27 +97,29 @@ function Notice({ role }) {
       minute: "numeric",
       hour12: true,
     });
-
-    return `${formattedDate} at ${formattedTime}`; // Combine date and time
+    return `${formattedDate} at ${formattedTime}`;
   };
 
   // Function to get dot color based on importance
   const getDotColor = (importance) => {
     switch (importance) {
       case "very important":
-        return "bg-red-700"; // Red for very important
+        return "bg-red-700";
       case "important":
-        return "bg-orange-500"; // Orange for important
+        return "bg-orange-500";
       case "optional":
-        return "bg-yellow-500"; // Yellow for optional
+        return "bg-yellow-500";
       default:
-        return "bg-gray-400"; // Default color
+        return "bg-gray-400";
     }
   };
 
   return (
     <div className="w-full p-4 bg-gray-100 rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-4">Notices</h2>
+
+      {/* Error message */}
+      {error && <div className="text-red-500 mb-4">{error}</div>}
 
       {/* Only Chairman can add new notices */}
       {role === "Chairman" && (
@@ -133,9 +142,13 @@ function Notice({ role }) {
           </select>
           <button
             onClick={handleAddNotice}
-            className="bg-red-700 text-white px-4 py-2 rounded-lg mt-2 transition duration-200 hover:bg-red-600"
+            disabled={loading} // Disable button while loading
+            className={`bg-red-700 text-white px-4 py-2 rounded-lg mt-2 transition duration-200 hover:bg-red-600 ${
+              loading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            aria-label="Add Notice"
           >
-            Add Notice
+            {loading ? "Adding..." : "Add Notice"}
           </button>
         </div>
       )}
@@ -151,12 +164,15 @@ function Notice({ role }) {
               className="border-b py-3 flex justify-between items-start bg-white rounded-lg shadow-sm mb-2 transition duration-200 hover:bg-gray-50 px-3"
             >
               <div className="flex items-start">
-                <div className={`w-3 h-3 rounded-full mr-2 ${getDotColor(notice.importance)}`} />
+                <div
+                  className={`w-3 h-3 rounded-full mr-2 ${getDotColor(
+                    notice.importance
+                  )}`}
+                />
                 <div>
                   <span className="font-semibold">{notice.text}</span>
                   <div className="text-gray-500 text-sm">
-                    {formatDate(notice.createdAt)}{" "}
-                    {/* Display formatted date and time */}
+                    {formatDate(notice.createdAt)}
                   </div>
                 </div>
               </div>
@@ -165,6 +181,7 @@ function Notice({ role }) {
                 <button
                   onClick={() => handleDeleteNotice(notice.id)}
                   className="relative inline-flex items-center justify-center p-2 transition duration-200 bg-transparent text-red-500 rounded-full hover:bg-gray-200 hover:text-red-600 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50"
+                  aria-label="Delete Notice"
                 >
                   <span className="absolute inset-0 rounded-full ring-1 ring-gray-300 opacity-0 transition-opacity duration-200 hover:opacity-100"></span>
                   Delete

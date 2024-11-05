@@ -8,6 +8,7 @@ import SocietyInfo from "./SocietyInfo";
 import Members from "./Members";
 import Parking from "./Parking";
 import Account from "./Account";
+import About from "./About";
 import { Route, Routes } from "react-router-dom";
 
 function System() {
@@ -27,6 +28,7 @@ function System() {
           <Route path="/members" element={<Members />}></Route>
           <Route path="/account" element={<Account />}></Route>
           <Route path="/parking" element={<Parking />}></Route>
+          <Route path="/about" element={<About />}></Route>
         </Routes>
       </div>
     </div>

@@ -14,6 +14,7 @@ const Chat = ({ selectedUser, toggleChatbox, handleUserSelect }) => {
   const [messages, setMessages] = useState([]);
   const [senderNames, setSenderNames] = useState({});
   const [loading, setLoading] = useState(true);
+  const [typing, setTyping] = useState(false);
   const currentUserId = auth.currentUser?.uid;
   const textareaRef = useRef(null);
   const messagesEndRef = useRef(null);
@@ -160,6 +161,14 @@ const Chat = ({ selectedUser, toggleChatbox, handleUserSelect }) => {
         100
       )}px`;
     }
+
+    // Notify when user is typing
+    if (!typing) {
+      setTyping(true);
+      setTimeout(() => {
+        setTyping(false);
+      }, 3000); // Typing indicator timeout
+    }
   };
 
   return (
@@ -168,6 +177,7 @@ const Chat = ({ selectedUser, toggleChatbox, handleUserSelect }) => {
         <h2 className="text-xl font-semibold text-gray-800">
           {selectedUser ? selectedUser.displayName : "Select a User"}
         </h2>
+        {typing && <div className="text-gray-500 italic">Typing...</div>}
       </div>
       <div className="flex-1 overflow-y-auto mb-4 p-2 bg-gray-100 border border-gray-300 rounded-lg">
         {loading ? (

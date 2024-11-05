@@ -20,6 +20,7 @@ const Chatbox = () => {
       <button
         onClick={toggleChatbox}
         className="fixed bottom-5 right-5 p-4 bg-red-600 rounded-full shadow-lg hover:bg-red-500 hover:shadow-xl transition duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-red-300"
+        aria-label="Open Chat"
       >
         {/* SVG Icon for Chat */}
         <svg
@@ -50,12 +51,13 @@ const Chatbox = () => {
           <h2 className="text-lg font-bold">Group Chat</h2>
           <button
             onClick={toggleChatbox}
-            className="text-gray-500 hover:text-gray-700"
+            className="text-gray-500 hover:text-gray-700 focus:outline-none"
+            aria-label="Close Chat"
           >
             ✕
           </button>
         </div>
-        <div className="mt-2 flex aspect-[1/3] w-full h-full">
+        <div className="mt-2 flex h-full">
           <Sidebar onUserSelect={handleUserSelect} />
           <Chat selectedUser={selectedUser} />
         </div>

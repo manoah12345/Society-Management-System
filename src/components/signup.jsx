@@ -17,26 +17,35 @@ export const Signup = () => {
   const [occupation, setOccupation] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
-  // New state for password visibility
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [error, setError] = useState(""); // State for error messages
+  const [loading, setLoading] = useState(false); // State for loading
 
   const navigate = useNavigate();
 
-  const formatDate = (dateStr) => {
-    const date = new Date(dateStr);
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const year = date.getFullYear();
-    return `${day}-${month}-${year}`;
-  };
-
   const signUp = async (e) => {
     e.preventDefault();
+    setError(""); // Reset error state
+
     if (password !== confirmPassword) {
-      alert("Passwords do not match.");
-      return; // Prevent navigation if passwords don't match
+      setError("Passwords do not match.");
+      return;
     }
+
+    // Basic validation
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      setError("Invalid email address.");
+      return;
+    }
+
+    if (age <= 0 || age > 120) {
+      setError("Please enter a valid age.");
+      return;
+    }
+
+    setLoading(true); // Start loading state
+
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -44,7 +53,6 @@ export const Signup = () => {
         password
       );
       const user = userCredential.user;
-      const formattedBirthdate = formatDate(birthdate);
 
       await setDoc(doc(db, "users", user.uid), {
         email: user.email,
@@ -52,7 +60,7 @@ export const Signup = () => {
         createdAt: new Date(),
         flatNo: flatNo,
         role: member,
-        birthdate: formattedBirthdate,
+        birthdate: birthdate,
         age: age,
         gender: gender,
         occupation: occupation,
@@ -61,21 +69,19 @@ export const Signup = () => {
 
       navigate("/");
     } catch (error) {
-      console.error("Error signing up: ", error);
+      setError(error.message); // Set error message for display
+    } finally {
+      setLoading(false); // End loading state
     }
   };
 
   return (
-    <div className="h-[100vh] w-full flex items-center justify-center bg-gray-200">
-      <div
-        className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md "
-        style={{
-          boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)",
-        }}
-      >
+    <div className="h-screen w-full flex items-center justify-center bg-gray-200">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold text-center mb-6 text-red-700">
           Sign Up
         </h2>
+        {error && <div className="mb-4 text-red-600 text-center">{error}</div>}
         <form onSubmit={signUp}>
           {/* Name */}
           <div className="mb-4">
@@ -117,7 +123,7 @@ export const Signup = () => {
             </label>
             <div className="relative">
               <input
-                type={showPassword ? "text" : "password"} // Toggle password visibility
+                type={showPassword ? "text" : "password"}
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -127,7 +133,7 @@ export const Signup = () => {
               <button
                 type="button"
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 focus:outline-none"
-                onClick={() => setShowPassword(!showPassword)} // Toggle showPassword state
+                onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? "Hide" : "Show"}
               </button>
@@ -144,7 +150,7 @@ export const Signup = () => {
             </label>
             <div className="relative">
               <input
-                type={showConfirmPassword ? "text" : "password"} // Toggle confirm password visibility
+                type={showConfirmPassword ? "text" : "password"}
                 id="confirmPassword"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
@@ -154,13 +160,16 @@ export const Signup = () => {
               <button
                 type="button"
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 focus:outline-none"
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)} // Toggle showConfirmPassword state
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               >
                 {showConfirmPassword ? "Hide" : "Show"}
               </button>
             </div>
           </div>
 
+          {/* Other Inputs... */}
+          {/* Flat No, Role, Birthdate, Age, Gender, Occupation, Phone Number... */}
+          {/* Keep the same structure as above for these fields */}
           {/* Flat No */}
           <div className="mb-4">
             <label htmlFor="flatNo" className="block text-gray-800 text-sm">
@@ -278,9 +287,12 @@ export const Signup = () => {
 
           <button
             type="submit"
-            className="w-full bg-red-700 text-white py-2 rounded-md hover:bg-red-600 transition duration-200"
+            className={`w-full ${
+              loading ? "bg-gray-400" : "bg-red-700"
+            } text-white py-2 rounded-md hover:bg-red-600 transition duration-200`}
+            disabled={loading}
           >
-            Sign Up
+            {loading ? "Signing Up..." : "Sign Up"}
           </button>
           <a
             href="/auth"

@@ -8,7 +8,7 @@ function SocietyInfo() {
       <h1 className="text-[40px] font-bold text-gray-800 mb-1">
         Unique Society
       </h1>
-      <h3 className="text-lg text-gray-600 mb-6">C-65</h3>
+      <h3 className="text-lg text-gray-600 mb-6">C-63</h3>
 
       {/* Info Grid */}
       <div

@@ -8,6 +8,7 @@ import { auth } from "../config/firebase-config"; // Import auth to get the curr
 
 function Home() {
   const [totalMembers, setTotalMembers] = useState(0);
+  const [totalVehicles, setTotalVehicles] = useState(0); // State to store total vehicles
   const [userRole, setUserRole] = useState(null); // State to store user role
   const navigate = useNavigate();
 
@@ -31,34 +32,46 @@ function Home() {
       }
     };
 
+    const fetchTotalVehicles = async () => {
+      const parkingQuerySnapshot = await getDocs(collection(db, "parkingData"));
+      const occupiedCount = parkingQuerySnapshot.docs.filter(
+        (doc) => doc.data().isOccupied
+      ).length;
+      setTotalVehicles(occupiedCount);
+    };
+
     fetchTotalUsers();
     fetchUserRole();
+    fetchTotalVehicles();
   }, []);
 
   const handleTotalMembersClick = () => {
     navigate("/members");
   };
 
+  const handleTotalVehiclesClick = () => {
+    navigate("/parking");
+  };
+
   return (
     <div className="min-h-screen w-full flex flex-col py-6 items-center bg-[#E2E3E5]">
       {/* Container for statistics */}
       <div className="flex justify-around w-full mb-6">
-        <div className="px-10 py-7 border rounded-xl bg-white cursor-pointer transition-all duration-300 shadow-[6px_6px_12px_#c5c5c5,-6px_-6px_12px_#ffffff] hover:bg-[#e8e8e8]">
+        <div
+          className="px-10 py-7 border rounded-xl bg-white cursor-pointer transition-all duration-300 shadow-[6px_6px_12px_#c5c5c5,-6px_-6px_12px_#ffffff] hover:bg-[#e8e8e8]"
+          onClick={handleTotalVehiclesClick}
+        >
           <p className="text-xl font-semibold text-gray-800">
-            Total number of Vehicles
+            Total number of Vehicles: {totalVehicles}{" "}
+            {/* Displaying total vehicles */}
           </p>
         </div>
         <div
           className="px-10 py-7 border rounded-xl bg-white cursor-pointer transition-all duration-300 shadow-[6px_6px_12px_#c5c5c5,-6px_-6px_12px_#ffffff] hover:bg-[#e8e8e8] active:shadow-[inset_4px_4px_12px_#c5c5c5,inset_-4px_-4px_12px_#ffffff]"
           onClick={handleTotalMembersClick}
         >
-          <p className="text-xl font-semibold text-red-700">
-            Total Members: {totalMembers}
-          </p>
-        </div>
-        <div className="px-10 py-7 border rounded-xl bg-white cursor-pointer transition-all duration-300 shadow-[6px_6px_12px_#c5c5c5,-6px_-6px_12px_#ffffff] hover:bg-[#e8e8e8]">
           <p className="text-xl font-semibold text-gray-800">
-            Remaining empty Blocks
+            Total Members: {totalMembers}
           </p>
         </div>
       </div>
@@ -68,11 +81,13 @@ function Home() {
 
       {/* Separate container for Notice component */}
       <div className="flex items-center justify-center w-[80vw] h-full mb-6">
-        <div className="max-h-[60vh] w-full overflow-auto bg-[#e0e0e0] border border-[#e8e8e8] rounded-[50px] p-6 
+        <div
+          className="max-h-[60vh] w-full overflow-auto bg-[#e0e0e0] border border-[#e8e8e8] rounded-[50px] p-6 
             shadow-[12px_12px_28px_#bababa,-12px_-12px_28px_#ffffff] 
             transition-all duration-300 
             hover:shadow-[12px_12px_28px_#bababa,-12px_-12px_28px_#ffffff]
-            active:shadow-[inset_4px_4px_12px_rgba(197,197,197,0.5),_inset_-4px_-4px_12px_rgba(255,255,255,0.5)]">
+            active:shadow-[inset_4px_4px_12px_rgba(197,197,197,0.5),_inset_-4px_-4px_12px_rgba(255,255,255,0.5)]"
+        >
           <Notice role={userRole} /> {/* Passing the role dynamically */}
         </div>
       </div>

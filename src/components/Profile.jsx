@@ -8,6 +8,8 @@ import Chatbox from "./Chatbox";
 function Profile() {
   const email = auth?.currentUser?.email;
   const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true); // Loading state
+  const [error, setError] = useState(null); // Error state
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -22,7 +24,12 @@ function Profile() {
           }
         } catch (error) {
           console.error("Error fetching user data:", error.message);
+          setError("Failed to load user data. Please try again later.");
+        } finally {
+          setLoading(false); // Set loading to false after fetching
         }
+      } else {
+        setLoading(false); // User not authenticated
       }
     };
     fetchUserData();
@@ -32,20 +39,22 @@ function Profile() {
     <div className="min-h-screen w-full bg-[#E2E3E5] flex flex-col items-center">
       {/* Profile Section */}
       <div
-        className="w-[50vw] flex flex-col items-center justify-center gap-4 mt-8 p-6"
+        className="w-[90vw] sm:w-[50vw] flex flex-col items-center justify-center gap-4 mt-8 p-6"
         style={{
           borderRadius: "50px",
           background: "#e0e0e0",
           boxShadow: "12px 12px 28px #bababa, -12px -12px 28px #ffffff",
         }}
       >
-        <Link to="/profile/detail">
+        <Link to="/profile/detail" aria-label="View profile details">
           <CgProfile className="text-[100px] text-gray-500 hover:text-gray-600 transition duration-300" />
         </Link>
         <h1 className="text-3xl font-semibold text-gray-800">
-          {userData ? userData.displayName : "Loading..."}
+          {loading
+            ? "Loading..."
+            : userData?.displayName || "No Name Available"}
         </h1>
-        <p className="text-gray-500">{email}</p>
+        <p className="text-gray-500">{email || "No email available"}</p>
 
         {/* Info Table */}
         <div className="w-full bg-gray-100 shadow-md rounded-lg mt-6 p-6">
@@ -54,18 +63,25 @@ function Profile() {
               <tr className="border-b">
                 <td className="py-2 font-semibold text-gray-600">Flat No.</td>
                 <td className="py-2 text-gray-800 text-center">
-                  {userData ? userData.flatNo : "Loading..."}
+                  {loading
+                    ? "Loading..."
+                    : userData?.flatNo || "No Flat Number"}
                 </td>
               </tr>
               <tr className="border-b">
                 <td className="py-2 font-semibold text-gray-600">Role</td>
                 <td className="py-2 text-gray-800 text-center">
-                  {userData ? userData.role : "Loading..."}
+                  {loading
+                    ? "Loading..."
+                    : userData?.role || "No Role Available"}
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
+
+        {/* Error Message */}
+        {error && <p className="text-red-600 mt-4">{error}</p>}
       </div>
 
       {/* Chatbox Section */}
