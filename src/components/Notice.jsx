@@ -12,7 +12,7 @@ import { db } from "../config/firebase-config";
 function Notice({ role }) {
   const [notices, setNotices] = useState([]);
   const [newNotice, setNewNotice] = useState("");
-  const [importance, setImportance] = useState("optional");
+  const [importance, setImportance] = useState("default");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -32,6 +32,7 @@ function Notice({ role }) {
             "very important": 1,
             important: 2,
             optional: 3,
+            default: 4,
           };
           return (
             importanceRank[a.importance] - importanceRank[b.importance] ||
@@ -136,6 +137,7 @@ function Notice({ role }) {
             onChange={(e) => setImportance(e.target.value)}
             className="mt-2 mb-4 border rounded-lg p-2 w-full"
           >
+            <option value="default">Default</option>
             <option value="optional">Optional</option>
             <option value="important">Important</option>
             <option value="very important">Very Important</option>
